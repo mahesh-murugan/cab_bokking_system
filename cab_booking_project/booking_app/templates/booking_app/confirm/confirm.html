@@ -1,0 +1,31 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'booking_app/assets/icons/taxi.svg' %}">
+
+    <title>Trav Cabs Login</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'booking_app/css/bootstrap.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'booking_app/css/signin.css' %}" rel="stylesheet">
+</head>
+
+<body class="text-center">
+<form class="form-signin" method="post">
+    {% csrf_token %}
+    <img class="mb-4" src="{% static 'booking_app/assets/icons/taxi.svg' %}" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Cab Booked Successfully</h1>
+    <div class="mb-3">
+        <a href="{% url 'home_view' %}" class="btn btn-outline-primary">Back To Home Page</a>
+    </div>
+    <p class="mt-5 mb-3 text-muted">&copy; 2020-2021</p>
+</form>
+</body>
+</html>

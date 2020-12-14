@@ -1,0 +1,46 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'booking_app/assets/icons/taxi.svg' %}">
+
+    <title>Trav Cabs Login</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'booking_app/css/bootstrap.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'booking_app/css/signin.css' %}" rel="stylesheet">
+</head>
+
+<body class="text-center">
+<form class="form-signin" method="post">
+    {% csrf_token %}
+    <img class="mb-4" src="{% static 'booking_app/assets/icons/taxi.svg' %}" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Please sign Up</h1>
+    {{ error }}
+    <label for="id_username" class="sr-only">username</label>
+    {{ form.username }}
+
+    <label for="id_email" class="sr-only">Email</label>
+    {{ form.email }}
+
+    <label for="id_phone" class="sr-only">Phone Number</label>
+    {{ form.phone }}
+    <br>
+    <label for="id_password" class="sr-only">Password</label>
+    {{ form.password }}
+
+    <label for="id_repeatpassword" class="sr-only">Repeat Password</label>
+    {{ form.repeatpassword }}
+    <div class="mb-3">
+        <a href="{% url 'login_view' %}">Back to Login</a>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+</form>
+</body>
+</html>

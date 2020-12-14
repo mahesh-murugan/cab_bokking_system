@@ -1,0 +1,28 @@
+{
+  "cities": [
+    "New Delhi",
+    "Mumbai",
+    "Kolkata",
+    "Chennai",
+    "Hyderabad",
+    "Pune",
+    "Chandigarh",
+    "Ahmedabad",
+    "Gurugram",
+    "Noida",
+    "Goa"
+  ],
+  "Bengaluru_kms": [
+    {"New Delhi" : 2275 },
+    {"Mumbai" : 985},
+    {"Kolkata": 1869},
+    {"Chennai" : 346},
+    {"Hyderabad": 570},
+    {"Pune" : 840},
+    {"Chandigarh": 2431},
+    {"Ahmedabad": 1490},
+    {"Gurugram": 2169},
+    {"Noida": 2124},
+    {"Goa": 560}
+  ]
+}

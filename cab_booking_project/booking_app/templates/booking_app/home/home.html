@@ -1,0 +1,198 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static 'booking_app/assets/icons/taxi.svg' %}">
+    <title>Trav cabs</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+    <link href="{% static 'booking_app/css/bootstrap-datetimepicker.css' %}" rel="stylesheet" />
+    <link href="{% static 'booking_app/css/bootstrap.css' %}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'booking_app/css/cover.css' %}" rel="stylesheet" />
+    <link href="{% static 'booking_app/css/select2.css' %}" rel="stylesheet" />
+</head>
+<body class="text-center" >
+
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column" id="app_1">
+    <header class="masthead mb-auto">
+        <div class="inner">
+            <a href="{% url 'home_view' %}" class="masthead-brand"  style="text-decoration: none;" data-toggle="tooltip" data-placement="bottom" title="Trav Cabs" ><img src="{% static 'booking_app/assets/icons/taxi.svg' %}" height="50" width="50" alt="Trav Cabs">
+                <span class="font-weight-bold ml-4">Trav Cabs</span>
+            </a>
+            <nav class="nav nav-masthead justify-content-center">
+                <a class="nav-link active" href="{% url 'home_view' %}">Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <main role="main" class="inner cover">
+        <h2 class="cover-heading font-weight-bold">Book Cabs</h2>
+        <div class="card">
+            <div class="card-header bg-dark">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="oneway-trip-tab" data-toggle="tab" href="#oneway-trip" role="tab" aria-controls="oneway-trip" aria-selected="true">Oneway Trip</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="round-trip-tab" data-toggle="tab" href="#oneway-trip" role="tab" aria-controls="oneway-trip" aria-selected="false">Round Trip</a>
+                    </li>
+                </ul>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="card-body">
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="oneway-trip" role="tabpanel" aria-labelledby="oneway-trip-tab">
+
+                            <div class="row">
+                                <div class="col">
+                                    <label for="inputOrigincity" class="text-dark">Select Origin</label>
+                                    <br>
+                                    <select id="inputOrigincity" class="form-control" name="origin_city">
+                                        <option selected value="Bengaluru">Bengaluru</option>
+                                    </select>
+                                </div>
+
+                                <div class="col">
+                                    <label for="inputDestinationcity" class="text-dark">Select Destination</label>
+                                    <select id="inputDestinationcity" class="form-control" name="destination_city">
+                                        <option v-for="city in cities" style="color: black;" v-bind:value="city">[[ city ]]</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col">
+                                    <label for="departDateTimePicker" class="text-dark float-left">Depart Date and Time</label>
+                                    <div class="input-group">
+                                        <input id="departDateTimePicker" class="form-control" type="text" name="depart_date_time" required>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text fa fa-calendar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4" id="return_date_time_div">
+                                <div class="col">
+                                    <label for="returnDateTimePicker" class="text-dark float-left">Return Date and Time</label>
+                                    <div class="input-group">
+                                        <input id="returnDateTimePicker" class="form-control" type="text" name="return_date_time">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text fa fa-calendar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4 d-none">
+                                <div class="col">
+                                    <label for="round_trip_check" class="text-dark float-left">Round Trip check</label>
+                                    <input id="round_trip_check" class="form-control" type="checkbox" name="round_trip_check">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-warning">Search Cabs</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="mastfoot mt-auto"></footer>
+</div>
+
+
+<script type="application/javascript" src="{% static 'booking_app/js/jquery.js' %}" ></script>
+
+<!-- Bootstrap Bundle with Popper -->
+<script type="application/javascript" src="{% static 'booking_app/js/moment.js' %}" ></script>
+<script type="application/javascript" src="{% static 'booking_app/js/bootstrap-datetimepicker.js' %}" ></script>
+<script type="application/javascript" src="{% static 'booking_app/js/bootstrap.min.js' %}" ></script>
+<script type="application/javascript" src="{% static 'booking_app/js/select2.js' %}" ></script>
+<script type="application/javascript" src="{% static 'booking_app/js/vue.js' %}" ></script>
+<script type="application/javascript" src="{% static 'booking_app/js/axios.js' %}" ></script>
+
+<script type="text/javascript">
+
+    function sendRequest(url, method, data) {
+        var r = axios({
+            method: method,
+            url: url,
+            params: data,
+            xsrfCookieName: 'csrftoken',
+            xsrfHeaderName: 'X-CSRFToken',
+            headers: {
+                'X-Requested-with': 'XMLHttpRequest'
+            }
+        });
+
+        return r;
+    }
+
+    var app_1 = Vue.createApp({
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                cities : [],
+                departDate: new Date(),
+            }
+        },
+        mounted(){
+            $("#return_date_time_div").hide();
+            $('#inputOrigincity').select2();
+            $('#inputDestinationcity').select2();
+            $('#departDateTimePicker').datetimepicker({
+                format : 'dd-mm-yyyy HH:ii P',
+                showMeridian : true,
+                startDate: new Date(),
+                initialDate: new Date(),
+            });
+            $('#returnDateTimePicker').datetimepicker({
+                format : 'dd-mm-yyyy HH:ii P',
+                showMeridian : true,
+                startDate: new Date(),
+                initialDate: new Date(),
+            });
+            var self = this;
+            sendRequest('{% url "json_reader_view" "data.json" %}', 'get', {})
+                .then(function (response) {
+                    if (response.data.datas.cities){
+                        self.cities = response.data.datas.cities;
+                    }
+                }).catch(function (error) {
+                // handle error
+                console.log(error);
+            });
+
+            $("#round-trip-tab").click(function (){
+                $("#returnDateTimePicker").prop('required', true);
+                $("#round_trip_check").prop('checked', true);
+                $("#return_date_time_div").show();
+            });
+            $("#oneway-trip-tab").click(function (){
+                $("#returnDateTimePicker").prop('required', false);
+                $("#round_trip_check").prop('checked', false);
+                $("#return_date_time_div").hide();
+            });
+        },
+        methods : {
+
+        }
+    });
+
+    app_1.mount('#app_1');
+</script>
+</body>
+</html>

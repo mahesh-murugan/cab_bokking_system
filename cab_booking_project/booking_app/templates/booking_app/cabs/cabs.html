@@ -1,0 +1,258 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static 'booking_app/assets/icons/taxi.svg' %}">
+    <title>Trav cabs</title>
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'booking_app/css/bootstrap.css' %}" rel="stylesheet" />
+    <style type="text/css">
+        .card_shadow{
+            box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+        }
+    </style>
+</head>
+<body>
+<div id="app_1">
+
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand"  style="text-decoration: none;" href="{% url 'home_view' %}" title="Trav Cabs">
+            <img src="{% static 'booking_app/assets/icons/taxi.svg' %}" width="50" height="50" alt="Trav Cabs">
+            <span class="font-weight-bold ml-4">Trav Cabs</span>
+        </a>
+        <ul class="nav nav-pills mr-5">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-white" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Account </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">{{ request.user }}</a>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'login_view' %}">logout</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container-fluid bg-warning text-center">
+        <div class="row p-2">
+            <div class="col">
+                <h6 class="text-white" >From</h6>
+                {{ depart_city }}
+            </div>
+            <div class="col">
+                <h6 class="text-white" >To</h6>
+                {{ destination_city }}
+            </div>
+            <div class="col">
+                <h6 class="text-white" >Pickup Date And Time</h6>
+                {{ depart_date_time }}
+            </div>
+            {% if return_date_time %}
+                <div class="col">
+                    <h6 class="text-white" >Return Date And Time</h6>
+                    {{ return_date_time }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row rounded card_shadow p-4" >
+            <div class="col-4">
+                <img src="{% static 'booking_app/assets/car_images/hatchback2x.png' %}" title="Hatchback" alt="Hatchback" />
+                <h4 class="mt-2">Hatchback</h4>
+                <p class="text-muted">Tata Indica, Chevrolet Beat or similar</p>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-8">
+                        <div v-for="driver in driver_list" >
+                        <span v-if="driver.car_type == 'Hatchback'" >
+                            <small class="font-weight-bold">[[ driver.cab_name ]]</small><br>
+                            <small>[[ driver.car_name ]]</small><br>
+                            <button type="button" class="btn btn-outline-danger mt-2 mb-2" style="padding: 0 50px;"
+                                    v-on:click="set_driver_and_price(driver.driver_id, driver.price), set_price(driver.car_type, driver.price);">
+                                ₹ [[ driver.price ]]
+                            </button>
+                        </span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <small class="text-muted font-weight-light">Distance [[ distance_kms ]] Kms</small><br>
+                        <small class="text-muted font-weight-light">Max 4 seat</small><br>
+                        <small class="text-muted font-weight-light">Extra fare ₹10.00/km</small><br>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-2 text-center border border-bottom-0 border-right-0 border-top-0">
+                <h4>₹ [[ hatchback_price ]]</h4>
+                <button class="btn btn-outline-warning font-weight-bold mt-2 submit_btn">Book Now</button>
+            </div>
+        </div>
+
+        <div class="row rounded card_shadow p-4 mt-4" >
+            <div class="col-4">
+                <img src="{% static 'booking_app/assets/car_images/sedan2x.png' %}" title="Hatchback" alt="Hatchback" />
+                <h4 class="mt-2">Sedan</h4>
+                <p class="text-muted">Toyota Etios, Swift Dzire or similar</p>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-8">
+                        <div v-for="driver in driver_list" >
+                        <span v-if="driver.car_type == 'Sedan'" >
+                            <small class="font-weight-bold">[[ driver.cab_name ]]</small><br>
+                            <small>[[ driver.car_name ]]</small><br>
+                            <button type="button" class="btn btn-outline-danger mt-2 mb-2" style="padding: 0 50px;"
+                                    v-on:click="set_driver_and_price(driver.driver_id, driver.price), set_price(driver.car_type, driver.price);">
+                                ₹ [[ driver.price ]]
+                            </button>
+                        </span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <small class="text-muted font-weight-light">Distance [[ distance_kms ]] Kms</small><br>
+                        <small class="text-muted font-weight-light">Max 4 seat</small><br>
+                        <small class="text-muted font-weight-light">Extra fare ₹10.00/km</small><br>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-2 text-center border border-bottom-0 border-right-0 border-top-0">
+                <h4>₹ [[ sedan_price ]]</h4>
+                <button class="btn btn-outline-warning font-weight-bold mt-2 submit_btn">Book Now</button>
+            </div>
+        </div>
+
+        <div class="row rounded card_shadow p-4 mt-4 mb-4" >
+            <div class="col-4">
+                <img src="{% static 'booking_app/assets/car_images/suv2x.png' %}" title="Hatchback" alt="Hatchback" />
+                <h4 class="mt-2">SUV</h4>
+                <p class="text-muted">Mahindra Xylo, Toyota Innova or similar</p>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-8">
+                        <div v-for="driver in driver_list" >
+                        <span v-if="driver.car_type == 'SUV'" >
+                            <small class="font-weight-bold">[[ driver.cab_name ]]</small><br>
+                            <small>[[ driver.car_name ]]</small><br>
+                            <button type="button" class="btn btn-outline-danger mt-2 mb-2" style="padding: 0 50px;"
+                                    v-on:click="set_driver_and_price(driver.driver_id, driver.price), set_price(driver.car_type, driver.price);" >
+                                ₹ [[ driver.price ]]
+                            </button>
+                        </span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <small class="text-muted font-weight-light">Distance [[ distance_kms ]] Kms</small><br>
+                        <small class="text-muted font-weight-light">Max 6 seat</small><br>
+                        <small class="text-muted font-weight-light">Extra fare ₹10.00/km</small><br>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-2 text-center border border-bottom-0 border-right-0 border-top-0">
+                <h4>₹ [[ suv_price ]]</h4>
+                <button class="btn btn-outline-warning font-weight-bold mt-2 submit_btn">Book Now</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="d-none" style="display: none;">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" id="id_submit_btn">submit</button>
+        </form>
+    </div>
+</div>
+
+<script src="{% static 'booking_app/js/jquery.js' %}" ></script>
+<!-- Bootstrap Bundle with Popper -->
+<script src="{% static 'booking_app/js/bootstrap.min.js' %}" ></script>
+<script src="{% static 'booking_app/js/vue.js' %}" ></script>
+<script src="{% static 'booking_app/js/axios.js' %}" ></script>
+
+<script type="text/javascript">
+
+    function sendRequest(url, method, data) {
+        var r = axios({
+            method: method,
+            url: url,
+            params: data,
+            xsrfCookieName: 'csrftoken',
+            xsrfHeaderName: 'X-CSRFToken',
+            headers: {
+                'X-Requested-with': 'XMLHttpRequest'
+            }
+        });
+
+        return r;
+    }
+
+    var driver_list = {{ driver_list|safe }};
+    var distance_kms = {{ distance_kms|safe }};
+
+    var app_1 = Vue.createApp({
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                driver_list : driver_list,
+                distance_kms : distance_kms,
+                hatchback_price : 0,
+                sedan_price : 0,
+                suv_price : 0,
+            }
+        },
+        mounted(){
+            $(".submit_btn").click(function (){
+                if ($("#id_driver").val() === '' || $("#id_price").val() === ''){
+                    console.log('please select a cab');
+                    alert('please select a cab');
+                }
+                else {
+                    $("#id_submit_btn").click();
+                }
+            });
+        },
+        methods : {
+            set_driver_and_price(driver_id, price){
+                console.log(driver_id, price);
+                $("#id_driver").val(driver_id);
+                $("#id_price").val(price);
+            },
+            set_price(car_type, price){
+                if (car_type === 'Hatchback'){
+                    this.hatchback_price = price;
+                    this.sedan_price = 0;
+                    this.suv_price = 0;
+                }
+                else if (car_type === 'Sedan'){
+                    this.hatchback_price = 0;
+                    this.sedan_price = price;
+                    this.suv_price = 0;
+                }
+                else if (car_type === 'SUV'){
+                    this.hatchback_price = 0;
+                    this.sedan_price = 0;
+                    this.suv_price = price;
+                }
+                else {
+                    this.hatchback_price = 0;
+                    this.sedan_price = 0;
+                    this.suv_price = 0;
+                }
+
+            },
+        }
+    });
+
+    app_1.mount('#app_1');
+</script>
+</body>
+</html>
